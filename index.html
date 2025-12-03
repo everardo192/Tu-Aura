@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tu Aura – Panel</title>
+
+  <style>
+    body {
+      width: 100%;
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #f5f5f7;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 98%;
+      height: 50px;
+      background: linear-gradient(to right, #ff7eb9, #ff65a3, #7afcff);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      justify-content: space-between;
+      color: white;
+      z-index: 1000;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
+    .navbar-title { font-size: 18px; font-weight: 700; }
+
+    .hamburger { width: 28px; height: 20px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .hamburger div { height: 3px; background: white; border-radius: 4px; transition: 0.3s; }
+
+    .menu {
+      position: fixed;
+      top: 50px;
+      right: -230px;
+      width: 200px;
+      background: #ffffff;
+      border-left: 4px solid #ff65a3;
+      color: #444;
+      padding: 10px 0;
+      transition: right 0.3s;
+      border-radius: 0 0 0 12px;
+      box-shadow: -3px 3px 12px rgba(0,0,0,0.15);
+    }
+    .menu.open { right: 0; }
+    .menu-item {
+      padding: 12px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+    .menu-item:hover { background: #ffe3f3; color: #ff2d75; }
+
+    /* TARJETA */
+    .frases-box {
+      width: 95%;
+      max-width: 700px;
+      margin: 100px auto 40px auto;
+      background: #fff0f5;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+
+    .frases-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #ff2d75;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .video-contenedor {
+      position: relative;
+      width: 100%;
+      height: 180px;
+    }
+
+    .imagen-derecha {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    .frase-sobre-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      width: 90%;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      opacity: 0;
+      transition: opacity .6s ease-in-out;
+    }
+
+    .frase-sobre-video.mostrar { opacity: 1; }
+
+    /* BOTONES DE ESTADO */
+    .estado-botones {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .estado-btn {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      background: #ffd1e8;
+      color: #ff2d75;
+      transition: 0.2s;
+    }
+
+    .estado-btn:hover {
+      transform: scale(1.07);
+      background: #ffb3d6;
+    }
+
+    .estado-btn.active {
+      background: #ff65a3;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* BOTÓN BUSCAR */
+    .frase-btn {
+      background: linear-gradient(90deg, #ff65a3, #7afcff);
+      border: none;
+      padding: 14px 22px;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #fff;
+      width: 100%;
+      margin-top: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .frase-btn:hover { transform: scale(1.05); }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h2 class="navbar-title">Tu Aura</h2>
+    <div class="hamburger"><div></div><div></div><div></div></div>
+  </div>
+
+  <!-- MENÚ -->
+  <div class="menu">
+    <button class="menu-item" data-genero="accion">😊 Felicidad</button>
+    <button class="menu-item" data-genero="comedia">😢 Tristeza</button>
+    <button class="menu-item" data-genero="romance">💖 Amor</button>
+    <button class="menu-item" data-genero="terror">🤔 Curiosidad</button>
+    <button class="menu-item" data-genero="drama">😠 Enojo</button>
+    <button class="menu-item" data-genero="animacion">😤 Frustración</button>
+  </div>
+
+  <!-- TARJETA -->
+  <div class="frases-box">
+    <h2 class="frases-title">💌 Tu frase</h2>
+
+    <div class="video-contenedor">
+      <video id="imagenDerecha" src="src/videos/video1.mp4" class="imagen-derecha" autoplay loop muted></video>
+      <p id="frase" class="frase-sobre-video">Presiona el botón para descubrir una frase especial ✨</p>
+    </div>
+
+    <!-- BOTONES DE ESTADO -->
+    <div class="estado-botones">
+      <button class="estado-btn" data-estado="feliz">😊 Feliz</button>
+      <button class="estado-btn" data-estado="triste">😢 Triste</button>
+      <button class="estado-btn" data-estado="enojado">😠 Enojado</button>
+      <button class="estado-btn" data-estado="amor">💖 Amor</button>
+      <button class="estado-btn" data-estado="pensativo">🤔 Pensativo</button>
+    </div>
+
+    <button id="btnFrase" class="frase-btn">🔍 Buscar</button>
+  </div>
+
+  <script>
+    // MENU HAMBURGUESA
+    const menu = document.querySelector(".menu");
+    const hamburger = document.querySelector(".hamburger");
+    hamburger.addEventListener("click", () => { menu.classList.toggle("open"); });
+
+    // VARIABLES
+    let frases = {};
+    let videos = {};
+    let estadoSeleccionado = null;
+
+    const fraseText = document.getElementById("frase");
+    const imagenDerecha = document.getElementById("imagenDerecha");
+
+    // CARGAR FRASES
+    fetch("src/frases/frases.json")
+      .then(res => res.json())
+      .then(data => frases = data)
+      .catch(err => console.error("Error cargando frases:", err));
+
+    // CARGAR VIDEOS
+    fetch("src/videos/videos.json")
+      .then(res => res.json())
+      .then(data => videos = data)
+      .catch(err => console.error("Error cargando videos:", err));
+
+    // Selección de emoción
+    const botonesEstado = document.querySelectorAll(".estado-btn");
+    botonesEstado.forEach(btn => {
+      btn.addEventListener("click", () => {
+        botonesEstado.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        estadoSeleccionado = btn.dataset.estado;
+      });
+    });
+
+    // BOTÓN BUSCAR
+    const btn = document.getElementById("btnFrase");
+
+    btn.addEventListener("click", () => {
+      if (!estadoSeleccionado) {
+        fraseText.textContent = "Selecciona un estado de ánimo primero 💡";
+        fraseText.classList.add("mostrar");
+        return;
+      }
+
+      // --- FRASE ---
+      const listaFrases = frases[estadoSeleccionado];
+      const fraseAleatoria = listaFrases[Math.floor(Math.random() * listaFrases.length)];
+
+      fraseText.classList.remove("mostrar");
+      setTimeout(() => {
+        fraseText.textContent = fraseAleatoria;
+        fraseText.classList.add("mostrar");
+      }, 100);
+
+      // --- VIDEO ---
+      const listaVideos = videos[estadoSeleccionado];
+      const videoAleatorio = listaVideos[Math.floor(Math.random() * listaVideos.length)];
+
+      imagenDerecha.src = videoAleatorio;
+    });
+
+    // FUNCIÓN PARA REDIRIGIR A NUEVA PANTALLA
+    function irAGenero(genero) {
+      // Usar rutas relativas según tu estructura de proyecto Vite
+      const rutas = {
+        accion: "/accion.html",
+        comedia: "/comedia.html",
+        romance: "/romance.html",
+        terror: "/terror.html",
+        drama: "/drama.html",
+        animacion: "/animacion.html"
+      };
+      
+      // Redirigir a la página correspondiente
+      window.location.href = rutas[genero] || "/";
+    }
+
+    // Agregar eventos a los botones del menú
+    const menuItems = document.querySelectorAll(".menu-item");
+    menuItems.forEach(item => {
+      item.addEventListener("click", () => {
+        const genero = item.dataset.genero;
+        irAGenero(genero);
+      });
+    });
+  </script>
+</body>
+</html>

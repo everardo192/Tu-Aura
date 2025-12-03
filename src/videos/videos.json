@@ -1,0 +1,27 @@
+{
+  "feliz": [
+    "src/videos/video6.mp4",
+    "src/videos/video2.mp4",
+    "src/videos/video7.mp4"
+  ],
+  "triste": [
+    "src/videos/video4.mp4",
+    "src/videos/video5.mp4",
+    "src/videos/video8.mp4"
+  ],
+  "enojado": [
+    "src/videos/video3.mp4",
+    "src/videos/video1.mp4",
+    "src/videos/video9.mp4"
+  ],
+  "amor": [
+    "src/videos/video10.mp4",
+    "src/videos/video11.mp4",
+    "src/videos/video12.mp4"
+  ],
+  "pensativo": [
+    "src/videos/video13.mp4",
+    "src/videos/video14.mp4",
+    "src/videos/video15.mp4"
+  ]
+}
