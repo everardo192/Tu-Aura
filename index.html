@@ -264,20 +264,20 @@
       imagenDerecha.src = videoAleatorio;
     });
 
-    // FUNCIÓN PARA REDIRIGIR A NUEVA PANTALLA
+    // FUNCIÓN PARA REDIRIGIR A NUEVA PANTALLA - CORREGIDA PARA GITHUB PAGES
     function irAGenero(genero) {
-      // Usar rutas relativas según tu estructura de proyecto Vite
+      // Usar rutas relativas para GitHub Pages
       const rutas = {
-        accion: "/accion.html",
-        comedia: "/comedia.html",
-        romance: "/romance.html",
-        terror: "/terror.html",
-        drama: "/drama.html",
-        animacion: "/animacion.html"
+        accion: "action.html",      // Note: es "action.html" no "accion.html"
+        comedia: "comedia.html",
+        romance: "romance.html",
+        terror: "terror.html",
+        drama: "drama.html",
+        animacion: "animation.html" // Note: es "animation.html" no "animacion.html"
       };
       
       // Redirigir a la página correspondiente
-      window.location.href = rutas[genero] || "/";
+      window.location.href = rutas[genero] || "index.html";
     }
 
     // Agregar eventos a los botones del menú
